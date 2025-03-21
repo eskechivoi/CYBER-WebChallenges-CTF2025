@@ -14,10 +14,10 @@ exports.saveUser = (user) => {
   fs.writeFileSync(usersPath, JSON.stringify(users, null, 2));
 };
 
-exports.registerUser = async (username, password, role) => {
+exports.registerUser = async (email, password, role) => {
   const users = this.getUsers();
 
-  const existingUser = users.find(user => user.username === username);
+  const existingUser = users.find(user => user.email === email);
   if (existingUser) {
     throw new Error('El usuario ya existe');
   }
@@ -26,7 +26,7 @@ exports.registerUser = async (username, password, role) => {
 
   const newUser = {
     id: (users.length + 1).toString(),
-    username,
+    email,
     password: hashedPassword,
     role
   };

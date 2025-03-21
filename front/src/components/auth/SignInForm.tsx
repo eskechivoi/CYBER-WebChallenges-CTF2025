@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { Link } from "react-router";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
@@ -6,9 +6,50 @@ import Input from "../form/input/InputField";
 import Checkbox from "../form/input/Checkbox";
 import Button from "../ui/button/Button";
 
-export default function SignInForm() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
+export default function SignInForm(): JSX.Element {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: formData.email,
+          password: formData.password
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error during registration");
+      }
+
+      const data = await response.json();
+      console.log("User registered successfully:", data);
+      setErrorMessage(null);
+      alert("Registration successful!");
+    } catch (error) {
+      console.error("Error during registration:", error);
+      setErrorMessage("An error occurred during registration. Please try again.");
+    }
+  };
+
   return (
     <div className="flex flex-col flex-1">
       <div className="w-full max-w-md pt-10 mx-auto">
@@ -41,13 +82,20 @@ export default function SignInForm() {
                 </span>
               </div>
             </div>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="space-y-6">
                 <div>
                   <Label>
                     Email <span className="text-error-500">*</span>{" "}
                   </Label>
-                  <Input placeholder="info@gmail.com" />
+                  <Input 
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="info@gmail.com"
+                  />
                 </div>
                 <div>
                   <Label>
@@ -55,8 +103,12 @@ export default function SignInForm() {
                   </Label>
                   <div className="relative">
                     <Input
-                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      name="password"
                       placeholder="Enter your password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      type={showPassword ? "text" : "password"}
                     />
                     <span
                       onClick={() => setShowPassword(!showPassword)}
@@ -91,7 +143,7 @@ export default function SignInForm() {
                 </div>
               </div>
             </form>
-
+            {errorMessage && <p className="text-sm text-red-500">{errorMessage}</p>}
             <div className="mt-5">
               <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
                 Don&apos;t have an account? {""}

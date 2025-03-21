@@ -9,9 +9,9 @@ un fichero .env, por ejemplo.)
 */
 const SECRET_KEY = 'flik.me.3';
 
-exports.authenticate = async (username, password) => {
+exports.authenticate = async (email, password) => {
   const users = userService.getUsers();
-  const user = users.find(u => u.username === username);
+  const user = users.find(u => u.email === email);
 
   if (!user) {
     return { success: false, message: 'Credenciales inválidas' };
