@@ -31,13 +31,13 @@ export default function SignUpForm(): JSX.Element {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/users/register", {
+      const response = await fetch("http://localhost:4000/api/users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: formData.email,
+          email: formData.email,
           password: formData.password
         }),
       });

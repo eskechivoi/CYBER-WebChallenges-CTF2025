@@ -1,58 +1,34 @@
 services:
-  web-front:
-    build: ./web-front
-    image: corp-web-front:latest
+  frontend:
+    build: ./front
+    image: suguscorp-front:latest
     restart: always
     ports:
       - "8080:8080"
     depends_on:
-      - web-api
+      - backend
     networks:
       - corp-network
 
-  web-api:
-    build: ./web-api
-    image: corp-web-api:latest
+  backend:
+    build: ./back
+    image: suguscorp-api:latest
     restart: always
     ports:
-    - "0880:0880"
+    - "4000:4000"
     env_file: ".env"
     environment:
       - NODE_ENV=production
-      - PORT=0880
-      - DB_HOST=corp-db
-      - DB_USER=${CORP_DB_USER}
-      - DB_PASSWORD=${CORP_DB_PASSWORD}
-      - DB_NAME=SUGUSCORP
-      - DB_PORT=3306
+      - PORT=4000
       - LOG_LEVEL=info
       - CORS_ORIGIN=*
     depends_on:
       - corp-db
     volumes:
-      - /var/log/webapi:/app/logs
-    networks:
-      - corp-network
-
-  corp-db:
-    image: mysql
-    restart: always
-    env_file: ".env"
-    environment:
-      - MYSQL_ROOT_PASSWORD=${CORP_DB_PASSWORD}
-      - MYSQL_DATABASE=SUGUSCORP
-      - MYSQL_USER=${CORP_DB_USER}
-      - MYSQL_PASSWORD=${CORP_DB_PASSWORD}
-      - MYSQL_AUTHENTICATION_PLUGIN=caching_sha2_password
-    volumes:
-      - mysql-data:/var/lib/mysql
-      - /var/mysql/exports:/var/lib/mysql-files
+      - /app/data/users.json
     networks:
       - corp-network
 
 networks:
   corp-network:
     driver: bridge
-
-volumes:
-  mysql-data:
