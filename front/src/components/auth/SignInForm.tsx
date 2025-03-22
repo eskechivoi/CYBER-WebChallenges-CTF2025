@@ -1,12 +1,15 @@
 import { JSX, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "../../icons";
+import { useAuth } from "../../context/AuthContext"
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Checkbox from "../form/input/Checkbox";
 import Button from "../ui/button/Button";
 
 export default function SignInForm(): JSX.Element {
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [formData, setFormData] = useState({
@@ -36,17 +39,21 @@ export default function SignInForm(): JSX.Element {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Error during registration");
+      const data = await response.json();
+
+      if (!response.ok && !data.success) {
+        throw new Error("Wrong credentials!");
+      } else if (!response.ok) {
+        throw new Error("Error during login!")
       }
 
-      const data = await response.json();
       console.log("User registered successfully:", data);
       setErrorMessage(null);
-      alert("Registration successful!");
+      login(data.token);
+      navigate('/dashboard');
     } catch (error) {
       console.error("Error during registration:", error);
-      setErrorMessage("An error occurred during registration. Please try again.");
+      setErrorMessage("" + error);
     }
   };
 

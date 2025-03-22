@@ -1,27 +1,32 @@
-import React from 'react';
-import { Navigate } from 'react-router';
+// ProtectedRoute.tsx
+import { Navigate, useLocation } from 'react-router';
+import { useAuth } from '../../context/AuthContext';
+import { JSX } from 'react';
 
-interface ProtectedRouteProps {
-  children: React.ReactNode;
-  user: User | null;
-  requiredRole?: string;
-}
+const ProtectedRoute: React.FC<{ 
+  children: JSX.Element, 
+  requiredRole?: string 
+}> = ({ children, requiredRole }) => {
+  const { user } = useAuth();
+  const location = useLocation();
 
-interface User {
-  id: string;
-  role: string;
-}
-
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, user, requiredRole }) => {
   if (!user) {
-    return <Navigate to="/signin" />;
+    return <Navigate to="/signin" state={{ from: location }} replace />;
   }
 
   if (requiredRole && user.role !== requiredRole) {
-    return <Navigate to="/" />;
+    return (
+      <Navigate 
+        to="/" 
+        replace 
+        state={{ 
+          error: "No tienes permisos para acceder a esta página" 
+        }} 
+      />
+    );
   }
 
-  return <>{children}</>;
+  return children;
 };
 
 export default ProtectedRoute;
