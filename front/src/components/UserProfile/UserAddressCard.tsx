@@ -26,7 +26,7 @@ export default function UserAddressCard() {
                   Country
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  United States.
+                  Spain
                 </p>
               </div>
 
@@ -35,7 +35,7 @@ export default function UserAddressCard() {
                   City/State
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  Phoenix, Arizona, United States.
+                  Valladolid / Castile and Leon
                 </p>
               </div>
 
@@ -44,7 +44,7 @@ export default function UserAddressCard() {
                   Postal Code
                 </p>
                 <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                  ERT 2489
+                  47011
                 </p>
               </div>
 
@@ -97,22 +97,42 @@ export default function UserAddressCard() {
               <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
                 <div>
                   <Label>Country</Label>
-                  <Input type="text" value="United States" />
+                  <Input
+                    type="text"
+                    value="Spain"
+                    disabled
+                    className="opacity-50 cursor-not-allowed" 
+                  />
                 </div>
 
                 <div>
                   <Label>City/State</Label>
-                  <Input type="text" value="Arizona, United States." />
+                  <Input
+                    type="text"
+                    value="Valladolid / Castile and Leon"
+                    disabled
+                    className="opacity-50 cursor-not-allowed" 
+                  />
                 </div>
 
                 <div>
                   <Label>Postal Code</Label>
-                  <Input type="text" value="ERT 2489" />
+                  <Input
+                    type="text"
+                    value="47011"
+                    disabled
+                    className="opacity-50 cursor-not-allowed" 
+                  />
                 </div>
 
                 <div>
                   <Label>TAX ID</Label>
-                  <Input type="text" value="AS4568384" />
+                  <Input
+                    type="text"
+                    value="AS4568384"
+                    disabled
+                    className="opacity-50 cursor-not-allowed" 
+                  />
                 </div>
               </div>
             </div>

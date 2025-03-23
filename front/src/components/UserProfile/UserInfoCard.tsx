@@ -3,9 +3,11 @@ import { Modal } from "../ui/modal";
 import Button from "../ui/button/Button";
 import Input from "../form/input/InputField";
 import Label from "../form/Label";
+import { useAuth } from "../../context/AuthContext";
 
 export default function UserInfoCard() {
   const { isOpen, openModal, closeModal } = useModal();
+  const { user } = useAuth()
   const handleSave = () => {
     // Handle save logic here
     console.log("Saving changes...");
@@ -61,7 +63,11 @@ export default function UserInfoCard() {
                 Bio
               </p>
               <p className="text-sm font-medium text-gray-800 dark:text-white/90">
-                Team Manager
+                {
+                  user?.role === "admin" 
+                  ? "The SUGUS Corp administrator."
+                  : "A minion working for SUGUS Corp."
+                }
               </p>
             </div>
           </div>
@@ -109,29 +115,21 @@ export default function UserInfoCard() {
 
                 <div className="grid grid-cols-1 gap-x-6 gap-y-5 lg:grid-cols-2">
                   <div>
-                    <Label>Facebook</Label>
-                    <Input
-                      type="text"
-                      value="https://www.facebook.com/PimjoHQ"
-                    />
-                  </div>
-
-                  <div>
                     <Label>X.com</Label>
-                    <Input type="text" value="https://x.com/PimjoHQ" />
+                    <Input type="text" value="https://x.com/sugus_de_uva" />
                   </div>
 
                   <div>
                     <Label>Linkedin</Label>
                     <Input
                       type="text"
-                      value="https://www.linkedin.com/company/pimjo"
+                      value="https://www.linkedin.com/company/sugusuva"
                     />
                   </div>
 
                   <div>
                     <Label>Instagram</Label>
-                    <Input type="text" value="https://instagram.com/PimjoHQ" />
+                    <Input type="text" value="https://www.instagram.com/sugus.uva" />
                   </div>
                 </div>
               </div>
@@ -163,7 +161,14 @@ export default function UserInfoCard() {
 
                   <div className="col-span-2">
                     <Label>Bio</Label>
-                    <Input type="text" value="Team Manager" />
+                    <Input 
+                      type="text"
+                      value={
+                        user?.role === "admin" 
+                        ? "The SUGUS Corp administrator."
+                        : "A minion working for SUGUS Corp."
+                      }
+                    />
                   </div>
                 </div>
               </div>
