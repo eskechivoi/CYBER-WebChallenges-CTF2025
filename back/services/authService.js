@@ -25,7 +25,7 @@ exports.authenticate = async (email, password) => {
       lname: user.lname
     },
     SECRET_KEY,
-    { expiresIn: '1h' }
+    { algorithm: 'HS256', expiresIn: '1h' }
   );
-  return { success: true, token, role: user.role };
+  return { success: true, token };
 };

@@ -13,7 +13,7 @@ exports.validateAdminRole = (decodedToken) => {
 
 exports.processToken = async (token) => {
     try {
-        const decoded = jwt.verify(token, SECRET_KEY);
+        const decoded = jwt.verify(token, SECRET_KEY, { algorithms: ['HS256'] });
         const isAdmin = this.validateAdminRole(decoded);
         if (isAdmin) {
             return { flag: FLAG };
