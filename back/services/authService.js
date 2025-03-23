@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const userService = require('./userService');
-const { SECRET_KEY } = require('../../config');
+const { SECRET_KEY } = require('../config');
 
 exports.authenticate = async (email, password) => {
   const users = userService.getUsers();

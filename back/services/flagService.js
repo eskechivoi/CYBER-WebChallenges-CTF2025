@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const authService = require('../services/authService');
-const { SECRET_KEY } = require('../../config');
+const { SECRET_KEY } = require('../config');
 
 const FLAG = 'SUGUS{cU!d4D0_c0N_L4s_cL4V3s_S3Cr3T4s}';
 
