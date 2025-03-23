@@ -1,13 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const userService = require('./userService');
-
-/* Aquí está la vulnerabilidad.
-La SECRET_KEY con la que estamos encriptando el JWT no es lo suficientemente segura.
-(Además está hardcodeada en el código por motivos didácticos, debería de estar en 
-un fichero .env, por ejemplo.)
-*/
-const SECRET_KEY = 'flik.me.3';
+const { SECRET_KEY } = require('../../config');
 
 exports.authenticate = async (email, password) => {
   const users = userService.getUsers();
