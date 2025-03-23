@@ -16,16 +16,11 @@ services:
     restart: always
     ports:
     - "4000:4000"
-    env_file: ".env"
     environment:
       - NODE_ENV=production
       - PORT=4000
-      - LOG_LEVEL=info
-      - CORS_ORIGIN=*
-    depends_on:
-      - corp-db
     volumes:
-      - /app/data/users.json
+      - /app/data/
     networks:
       - corp-network
 

@@ -8,7 +8,7 @@ import { UserCircleIcon } from "../../icons";
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, logout, getRole } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {

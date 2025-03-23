@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:20
 
 # Crea el directorio de la app
 WORKDIR /app
