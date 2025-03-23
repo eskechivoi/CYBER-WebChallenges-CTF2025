@@ -16,6 +16,16 @@ exports.authenticate = async (email, password) => {
     return { success: false, message: 'Credenciales inválidas' };
   }
 
-  const token = jwt.sign({ id: user.id, role: user.role }, SECRET_KEY, { expiresIn: '1h' });
+  const token = jwt.sign(
+    { 
+      id: user.id,
+      role: user.role,
+      email: user.email,
+      fname: user.fname,
+      lname: user.lname
+    },
+    SECRET_KEY,
+    { expiresIn: '1h' }
+  );
   return { success: true, token, role: user.role };
 };
