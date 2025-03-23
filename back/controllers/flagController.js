@@ -11,6 +11,7 @@ exports.getflag = async (req, res) => {
         res.status(200).json(result);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Error al procesar la solicitud' });
+        if(error.status) res.status(error.status).json(error);
+        else res.status(500).json({ error: 'Error al procesar la solicitud' });
     }
 };

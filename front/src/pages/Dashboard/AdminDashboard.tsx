@@ -12,7 +12,7 @@ const AdminDashboard: React.FC = () => {
   useEffect(() => {
     const fetchFlag = async (): Promise<void> => {
       try {
-        const response = await fetch("/api/flag", {
+        const response = await fetch("http://localhost:4000/api/flag", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
