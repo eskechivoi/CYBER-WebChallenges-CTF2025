@@ -12,6 +12,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   token: string | null;
+  loading: boolean;
   login: (token: string) => void;
   logout: () => void;
   getRole: () => string | null;
@@ -21,6 +22,7 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType>({
   user: null,
   token: null,
+  loading: true,
   login: () => {},
   logout: () => {},
   getRole: () => null,
@@ -30,6 +32,7 @@ export const AuthContext = createContext<AuthContextType>({
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true); 
 
   const validateToken = useCallback((storedToken: string): boolean => {
     try {
@@ -50,6 +53,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } else {
       localStorage.removeItem("token");
     }
+    setLoading(false);
   }, [validateToken]);
 
   const login = (newToken: string) => {
@@ -77,6 +81,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     <AuthContext.Provider value={{ 
       user, 
       token,
+      loading,
       login, 
       logout,
       getRole,

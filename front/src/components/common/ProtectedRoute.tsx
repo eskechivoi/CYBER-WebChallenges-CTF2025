@@ -7,8 +7,12 @@ const ProtectedRoute: React.FC<{
   children: JSX.Element, 
   requiredRole?: string 
 }> = ({ children, requiredRole }) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const location = useLocation();
+
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
 
   if (!user) {
     return <Navigate to="/signin" state={{ from: location }} replace />;
