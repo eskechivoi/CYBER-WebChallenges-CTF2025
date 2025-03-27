@@ -17,6 +17,8 @@ export default function SignInForm(): JSX.Element {
     password: "",
   });
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL
+
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +30,7 @@ export default function SignInForm(): JSX.Element {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:4000/api/auth/login", {
+      const response = await fetch(`${backendUrl}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

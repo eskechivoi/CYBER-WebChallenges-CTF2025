@@ -8,11 +8,12 @@ const AdminDashboard: React.FC = () => {
   const [flag, setFlag] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { token } = useAuth()
+  const backendUrl = import.meta.env.VITE_BACKEND_URL
 
   useEffect(() => {
     const fetchFlag = async (): Promise<void> => {
       try {
-        const response = await fetch("http://localhost:4000/api/flag", {
+        const response = await fetch(`${backendUrl}/api/flag`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
