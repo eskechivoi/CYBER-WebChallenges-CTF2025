@@ -1,12 +1,18 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 
 const app = express();
 
+const corsOrigin = process.env.CORS_ORIGIN;
+const corsMethods = process.env.CORS_METHODS.split(',');
+const corsHeaders = process.env.CORS_HEADERS.split(',');
+
 app.use(cors({
-  origin: /http:\/\/localhost(:\d+)?/,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  origin: corsOrigin,
+  methods: corsMethods,
+  allowedHeaders: corsHeaders,
 }));
 
 app.use(express.json());

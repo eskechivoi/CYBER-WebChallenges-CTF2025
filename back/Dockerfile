@@ -9,6 +9,7 @@ RUN npm install
 
 # Copia el código
 COPY . .
+RUN mkdir data && touch data/users.json 
 
 # Exponer el puerto
 EXPOSE 4000
