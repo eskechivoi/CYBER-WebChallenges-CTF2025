@@ -1,7 +1,7 @@
 const userService = require('../services/userService');
 
 exports.register = async (req, res) => {
-  const { email, password, fname, lname } = req.body;
+  const { email, fname, lname, password } = req.body;
 
   if (!email || !password || !fname || !lname) {
     return res.status(400).json({ message: 'Faltan datos necesarios' });
